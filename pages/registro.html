@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Facturas - Laboratorio Clínico</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <nav class="main-nav">
+        <a href="../index.html" class="nav-link">Nueva Factura</a>
+        <a href="registro.html" class="nav-link active">Registro</a>
+        <a href="catalogo.html" class="nav-link">Catálogo</a>
+        <a href="reportes.html" class="nav-link">Reportes</a>
+        <a href="configuracion.html" class="nav-link">Configuración</a>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>LABORATORIO CLINICO LIC. MARIS POLANCO</h1>
+            <p class="subtitle">Registro de Facturas</p>
+        </header>
+
+        <main>
+            <div class="registro-section">
+                <!-- Search bar -->
+                <div class="search-bar">
+                    <input type="text" id="buscarFactura"
+                        placeholder="🔍 Buscar por número de factura, fecha o nombre del paciente...">
+                </div>
+
+                <!-- Stats + filter row -->
+                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+                    <span class="registro-stats" id="totalFacturas">0 facturas</span>
+                    <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:0.9em; color:#856404; font-weight:600;">
+                        <input type="checkbox" id="soloRegistroPendientes" style="width:16px;height:16px;accent-color:#856404;">
+                        Solo con saldo pendiente
+                    </label>
+                </div>
+
+                <!-- Invoice list table -->
+                <div class="table-container">
+                    <table id="registroTable">
+                        <thead>
+                            <tr>
+                                <th>NO.</th>
+                                <th class="sortable" onclick="sortBy('numero')" id="th-numero">FACTURA ▼</th>
+                                <th class="sortable" onclick="sortBy('fecha')" id="th-fecha">FECHA</th>
+                                <th class="sortable" onclick="sortBy('paciente')" id="th-paciente">PACIENTE</th>
+                                <th class="sortable" onclick="sortBy('total')" id="th-total">TOTAL</th>
+                                <th class="sortable" onclick="sortBy('pendiente')" id="th-pendiente">PENDIENTE</th>
+                                <th style="text-align:center;">ENTREGADO</th>
+                                <th style="text-align:center;">NO ENTREGADO</th>
+                                <th>ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="registroTableBody">
+                            <!-- Rows will be added dynamically -->
+                        </tbody>
+                        <tfoot id="registroTfoot" style="display:none;">
+                            <tr>
+                                <td colspan="4"><strong>TOTAL VISIBLE</strong></td>
+                                <td><strong id="registroTotalSum">RD$ 0</strong></td>
+                                <td><strong id="registroPendienteSum">—</strong></td>
+                                <td colspan="3"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <!-- Pagination controls -->
+                <div id="paginacionControls" style="display:none; justify-content:center; align-items:center; gap:15px; margin:15px 0; padding:10px;">
+                    <button onclick="cambiarPagina(-1)" class="btn-secondary" id="btnAnterior">← Anterior</button>
+                    <span id="paginaInfo" style="font-size:0.9rem; color:#666;"></span>
+                    <button onclick="cambiarPagina(1)" class="btn-primary" id="btnSiguiente">Siguiente →</button>
+                </div>
+
+                <!-- Empty state -->
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <p>📭 No hay facturas guardadas</p>
+                    <a href="../index.html" class="btn-primary"
+                        style="display: inline-block; text-decoration: none; margin-top: 15px;">Crear primera
+                        factura</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for viewing invoice details -->
+    <div id="modalOverlay" class="modal-overlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Detalle de Factura</h2>
+                <button class="modal-close" onclick="cerrarModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-info">
+                    <p><strong>Paciente:</strong> <span id="modalPaciente"></span></p>
+                    <p><strong>Cédula:</strong> <span id="modalCedula"></span></p>
+                    <p><strong>Teléfono:</strong> <span id="modalTelefono"></span></p>
+                    <p><strong>Edad:</strong> <span id="modalEdad"></span></p>
+                    <p><strong>Fecha:</strong> <span id="modalFecha"></span></p>
+                    <p><strong>No. Factura:</strong> <span id="modalNumero"></span></p>
+                </div>
+                <table class="modal-table">
+                    <thead>
+                        <tr>
+                            <th>NO.</th>
+                            <th>ANÁLISIS</th>
+                            <th>PRECIO (RD$)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modalTableBody">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2"><span>TOTAL</span></td>
+                            <td><span id="modalTotal"></span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><span>PAGADO</span></td>
+                            <td><span id="modalPagado"></span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><span>PENDIENTE</span></td>
+                            <td><span id="modalPendiente"></span></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <!-- Abonos history -->
+                <div id="modalAbonos" style="margin-top:12px;"></div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-success" id="modalRePrintBtn">🖨️ Reimprimir</button>
+                <button class="btn-primary" id="modalEditBtn">Editar</button>
+                <button class="btn-secondary" onclick="cerrarModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/registro.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Facturas - Laboratorio Clínico</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <nav class="main-nav">
+        <a href="index.html" class="nav-link active">Nueva Factura</a>
+        <a href="pages/registro.html" class="nav-link">Registro</a>
+        <a href="pages/catalogo.html" class="nav-link">Catálogo</a>
+        <a href="pages/reportes.html" class="nav-link">Reportes</a>
+        <a href="pages/configuracion.html" class="nav-link">Configuración</a>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>LABORATORIO CLINICO LIC. MARIS POLANCO</h1>
+            <div id="printCorporateHeader" class="print-only-info"></div>
+            <p class="subtitle">Sistema de Facturación</p>
+        </header>
+
+        <main>
+            <div class="invoice-section">
+                <div class="patient-info">
+                    <div class="input-group required">
+                        <label for="patientName">Nombre del Paciente:</label>
+                        <input type="text" id="patientName" placeholder="Ingrese nombre del paciente" list="pacientesDatalist" autocomplete="off">
+                        <datalist id="pacientesDatalist"></datalist>
+                    </div>
+                    <div class="input-group">
+                        <label for="patientCedula">Cédula:</label>
+                        <input type="text" id="patientCedula" placeholder="000-0000000-0">
+                    </div>
+                    <div class="input-group">
+                        <label for="patientTelefono">Teléfono:</label>
+                        <input type="tel" id="patientTelefono" placeholder="000-000-0000">
+                    </div>
+                    <div class="input-group required">
+                        <label for="patientEdad">Edad:</label>
+                        <input type="text" id="patientEdad" placeholder="Edad del paciente">
+                    </div>
+                    <div class="input-group">
+                        <label for="invoiceDate">Fecha:</label>
+                        <input type="date" id="invoiceDate">
+                    </div>
+                    <div class="input-group">
+                        <label for="invoiceNumber">No. Factura:</label>
+                        <input type="text" id="invoiceNumber" placeholder="Auto-generado">
+                    </div>
+                </div>
+
+                <!-- Notes field -->
+                <div class="input-group" style="margin-bottom:18px;">
+                    <label for="invoiceNotes">Observaciones / Notas:</label>
+                    <textarea id="invoiceNotes" placeholder="Ej: Muestras en ayunas, autorizado por Dr. ..." rows="2"
+                        style="width:100%; padding:10px 15px; border:1px solid #e0e0e0; border-radius:3px; font-family:inherit; font-size:0.95em; resize:vertical;"></textarea>
+                </div>
+
+                <div class="table-container">
+                    <table id="invoiceTable">
+                        <thead>
+                            <tr>
+                                <th>NO.</th>
+                                <th>ANÁLISIS</th>
+                                <th>PRECIO (RD$)</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoiceTableBody">
+                            <!-- Rows will be added dynamically -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2"><span>SUBTOTAL</span></td>
+                                <td colspan="2"><span id="subtotalAmount">RD$ 0.00</span></td>
+                            </tr>
+                            <tr class="total-editable-row">
+                                <td colspan="2"><span>TOTAL FINAL</span></td>
+                                <td colspan="2">
+                                    <div class="total-edit-wrapper">
+                                        <span>RD$ </span>
+                                        <input type="number" id="totalFinalInput" placeholder="0.00" min="0" step="0.01">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="paid-editable-row">
+                                <td colspan="2"><span>MONTO PAGADO</span></td>
+                                <td colspan="2">
+                                    <div class="total-edit-wrapper">
+                                        <span>RD$ </span>
+                                        <input type="number" id="montoPagadoInput" placeholder="0.00" min="0" step="0.01">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="pending-row" id="pendingRow">
+                                <td colspan="2"><span>PENDIENTE</span></td>
+                                <td colspan="2"><span id="montoPendiente">RD$ 0.00</span></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="analysis-panel">
+                    <label class="panel-title">Seleccionar Análisis:</label>
+                    <div class="panel-search">
+                        <input type="text" id="analysisPanelSearch" placeholder="🔍 Buscar análisis..." autocomplete="off">
+                    </div>
+                    <div class="panel-list" id="analysisPanelList">
+                        <!-- Checkboxes will be added dynamically -->
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="clearBtn" class="btn-secondary">Limpiar Todo</button>
+                    <button id="saveBtn" class="btn-save">Guardar Factura</button>
+                    <button id="printBtn" class="btn-success">Generar Factura</button>
+                </div>
+
+                <!-- Abonos section (shown only when editing invoice with pending balance) -->
+                <div id="abonosSection" style="display:none; margin-top:20px; background:#f8f9fa; border:1px solid #dee2e6; border-radius:8px; padding:20px;">
+                    <h3 style="margin:0 0 15px 0; color:#495057; font-size:1rem;">💰 Registrar Abono / Pago Parcial</h3>
+                    <div style="display:flex; gap:15px; flex-wrap:wrap;">
+                        <div class="input-group" style="flex:1; min-width:130px;">
+                            <label for="abonoFecha">Fecha del Abono:</label>
+                            <input type="date" id="abonoFecha">
+                        </div>
+                        <div class="input-group" style="flex:1; min-width:130px;">
+                            <label for="abonoMonto">Monto (RD$):</label>
+                            <input type="number" id="abonoMonto" placeholder="0" min="0" step="1">
+                        </div>
+                        <div class="input-group" style="flex:2; min-width:200px;">
+                            <label for="abonoNota">Nota (opcional):</label>
+                            <input type="text" id="abonoNota" placeholder="Ej: Pago en efectivo">
+                        </div>
+                    </div>
+                    <div id="abonosHistorial" style="margin:10px 0;"></div>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:5px;">
+                        <button onclick="registrarAbono()" class="btn-primary">Registrar Abono</button>
+                        <button onclick="imprimirReciboAbono()" class="btn-secondary" id="btnImprimirRecibo" style="display:none;">Imprimir Recibo del Último Abono</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="printCorporateFooter" class="print-only-footer"></div>
+
+    <!-- Print-only layouts (populated by JS before window.print(), handled by CSS) -->
+    <div id="printFactura" class="print-factura-wrap" aria-hidden="true"></div>
+    <div id="reciboAbonoPrint" class="print-factura-wrap" aria-hidden="true"></div>
+
+
+    <script src="js/utils.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
