@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Análisis - Laboratorio Clínico</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <nav class="main-nav">
+        <a href="../index.html" class="nav-link">Nueva Factura</a>
+        <a href="registro.html" class="nav-link">Registro</a>
+        <a href="catalogo.html" class="nav-link active">Catálogo</a>
+        <a href="reportes.html" class="nav-link">Reportes</a>
+        <a href="configuracion.html" class="nav-link">Configuración</a>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>LABORATORIO CLINICO LIC. MARIS POLANCO</h1>
+            <p class="subtitle">Catálogo de Análisis</p>
+        </header>
+
+        <main>
+            <div class="catalogo-section">
+                <!-- Add new analysis form -->
+                <div class="form-card">
+                    <h3 class="form-card-title" id="formTitle">Agregar Nuevo Análisis</h3>
+                    <div class="form-row">
+                        <div class="input-group" style="flex:2;">
+                            <label for="nombreAnalisis">Nombre del Análisis:</label>
+                            <input type="text" id="nombreAnalisis" placeholder="Ej: Hemograma (Biometria Hematica)">
+                        </div>
+                        <div class="input-group" style="flex:1;">
+                            <label for="precioAnalisis">Precio (RD$):</label>
+                            <input type="number" id="precioAnalisis" placeholder="0" min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button id="guardarAnalisisBtn" class="btn-primary">Guardar</button>
+                        <button id="cancelarEditBtn" class="btn-secondary" style="display:none;">Cancelar</button>
+                    </div>
+                </div>
+
+                <!-- Search -->
+                <div class="search-bar">
+                    <input type="text" id="buscarCatalogo"
+                        placeholder="🔍 Buscar análisis en el catálogo...">
+                </div>
+
+                <!-- Stats -->
+                <div class="registro-stats">
+                    <span id="totalAnalisis">0 análisis</span>
+                </div>
+
+                <!-- Catalog table -->
+                <div class="table-container">
+                    <table id="catalogoTable">
+                        <thead>
+                            <tr>
+                                <th>NO.</th>
+                                <th>ANÁLISIS</th>
+                                <th>PRECIO (RD$)</th>
+                                <th>ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="catalogoTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/catalogo.js"></script>
+</body>
+
+</html>

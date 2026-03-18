@@ -1,0 +1,1261 @@
+/* === Montserrat Local Font === */
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat/Montserrat-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Navigation bar */
+.main-nav {
+  max-width: 1200px;
+  margin: 0 auto 0;
+  display: flex;
+  gap: 0;
+  background: #333;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+}
+
+.nav-link {
+  padding: 14px 28px;
+  color: #ccc;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95em;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.nav-link:hover {
+  background: #444;
+  color: white;
+}
+
+.nav-link.active {
+  background: #555;
+  color: white;
+  border-bottom-color: white;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: rgb(255, 255, 255);
+  border-radius: 0 0 3px 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Lighter shadow */
+  overflow: hidden;
+}
+
+header {
+  background: rgba(200, 196, 196, 0.422);
+  color: #333;
+  padding: 30px;
+  text-align: center;
+  border-bottom: 3px solid #333;
+}
+
+header h1 {
+  font-size: 2em;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  color: #000;
+}
+
+.subtitle {
+  font-size: 1em;
+  color: #000000;
+  font-weight: 500;
+}
+
+main {
+  padding: 20px;
+}
+
+.patient-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 0.9em;
+}
+
+.input-group input {
+  padding: 10px 15px;
+  border: 1px solid #e0e0e0; /* Lighter border */
+  border-radius: 3px;
+  font-size: 1em;
+  background: white;
+  transition: border-color 0.2s ease;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #999; /* Softer focus */
+}
+
+/* Required field indicator (* on label) */
+.input-group.required label::after {
+  content: ' *';
+  color: #c0392b;
+  font-weight: 700;
+}
+
+/* Error state for missing required fields */
+.input-group input.field-error {
+  border-color: #c0392b !important;
+  background-color: #fff5f5;
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-5px); }
+  75%       { transform: translateX(5px); }
+}
+
+
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 30px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+thead {
+  background: #f5f5f5;
+  color: #333;
+  border-bottom: 2px solid #333;
+}
+
+thead th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 500; /* Lighter header */
+  text-transform: uppercase;
+  font-size: 0.8em; /* Slightly smaller */
+  letter-spacing: 0.5px;
+  color: #555; /* Dark gray instead of black */
+}
+
+tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+tbody tr:hover {
+  background-color: #fafafa;
+}
+
+tbody td {
+  padding: 15px;
+  color: #333;
+}
+
+tbody td:nth-child(2) {
+  font-weight: 400; /* Normal weight */
+  color: #333;
+}
+
+tfoot {
+  background: #f5f5f5;
+  border-top: 3px solid #333;
+}
+
+tfoot td {
+  padding: 20px 15px;
+  font-size: 1.1em; /* Slightly smaller total */
+  font-weight: 500;
+  color: #333;
+}
+
+/* Editable total row */
+.total-editable-row td {
+  padding: 15px 15px;
+  font-size: 1.3em;
+  font-weight: 500;
+  color: #000;
+}
+
+.total-edit-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.total-edit-wrapper span {
+  font-weight: 500;
+  color: #000;
+}
+
+#totalFinalInput,
+#montoPagadoInput {
+  width: 130px;
+  padding: 6px 10px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 1em;
+  font-weight: 500;
+  color: #000;
+  background: #fff;
+  transition: border-color 0.2s ease;
+}
+
+#totalFinalInput:focus,
+#montoPagadoInput:focus {
+  outline: none;
+  border-color: #333;
+}
+
+.btn-remove {
+  background: #666;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.btn-remove:hover {
+  background: #333;
+}
+
+/* Analysis Checkbox Panel */
+.analysis-panel {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+}
+
+.panel-title {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 0.95em;
+}
+
+.panel-search {
+  margin-bottom: 12px;
+}
+
+.panel-search input {
+  width: 100%;
+  padding: 11px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1em;
+  background: white;
+  transition: border-color 0.2s ease;
+}
+
+.panel-search input:focus {
+  outline: none;
+  border-color: #666;
+}
+
+.panel-list {
+  max-height: 350px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+}
+
+.panel-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.15s ease;
+  font-size: 0.92em;
+  color: #333;
+}
+
+.panel-item:last-child {
+  border-bottom: none;
+}
+
+.panel-item:hover {
+  background-color: #f5f5f5;
+}
+
+.panel-item input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: #333;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.panel-item-name {
+  flex: 1;
+  font-weight: 500;
+  color: #111;
+}
+
+.panel-item-price {
+  font-weight: 500;
+  color: #27ae60;
+  white-space: nowrap;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-success {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 3px;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary {
+  background: #333;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #000;
+}
+
+.btn-secondary {
+  background: #999;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #666;
+}
+
+.btn-success {
+  background: #000;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #333;
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+}
+
+/* Save button */
+.btn-save {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.95em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  background: #555;
+  color: white;
+}
+
+.btn-save:hover {
+  background: #333;
+}
+
+/* NO. column */
+thead th:first-child,
+tbody td:first-child {
+  width: 50px;
+  text-align: center;
+}
+
+/* ===== REGISTRY PAGE STYLES ===== */
+
+.registro-section {
+  padding: 10px 0;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1em;
+  background: white;
+  transition: border-color 0.2s ease;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #666;
+}
+
+.registro-stats {
+  margin-bottom: 15px;
+  font-size: 0.9em;
+  color: #666;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.btn-action {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8em;
+  font-weight: 500;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.btn-action:hover {
+  transform: translateY(-1px);
+}
+
+.btn-ver {
+  background: #e8e8e8;
+  color: #333;
+}
+
+.btn-ver:hover {
+  background: #d0d0d0;
+}
+
+.btn-editar {
+  background: #e8e8e8;
+  color: #333;
+}
+
+.btn-editar:hover {
+  background: #d0d0d0;
+}
+
+.btn-eliminar {
+  background: #f0e0e0;
+  color: #8b0000;
+}
+
+.btn-eliminar:hover {
+  background: #e0c0c0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+}
+
+.empty-state p {
+  font-size: 1.3em;
+  margin-bottom: 10px;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 700px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 2px solid #333;
+  background: #f5f5f5;
+}
+
+.modal-header h2 {
+  font-size: 1.2em;
+  color: #000;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.3em;
+  cursor: pointer;
+  color: #666;
+  padding: 5px;
+}
+
+.modal-close:hover {
+  color: #000;
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.modal-info {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.modal-info p {
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.modal-info p:last-child {
+  margin-bottom: 0;
+}
+
+.modal-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.modal-table thead {
+  background: #f5f5f5;
+  border-bottom: 2px solid #333;
+}
+
+.modal-table thead th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.85em;
+  color: #000;
+}
+
+.modal-table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.modal-table tbody td {
+  padding: 10px 12px;
+  color: #333;
+}
+
+.modal-table tfoot {
+  border-top: 2px solid #333;
+  background: #f5f5f5;
+}
+
+.modal-table tfoot td {
+  padding: 12px;
+  font-weight: 700;
+  color: #000;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 15px 25px;
+  border-top: 1px solid #e0e0e0;
+  background: #fafafa;
+}
+
+/* Print Styles - Black and White Only */
+@media print {
+  * {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  body {
+    background: white;
+    padding: 0;
+    font-family: "Montserrat", "Segoe UI", sans-serif;
+  }
+
+  .container {
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .main-nav,
+  .analysis-panel,
+  .actions,
+  .btn-remove,
+  .subtitle {
+    display: none !important;
+  }
+
+  .print-only-info,
+  .print-only-footer {
+    display: block !important;
+  }
+
+  .print-only-info {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .print-only-info p {
+    margin: 2px 0;
+    font-size: 0.85em;
+    color: #333;
+  }
+
+  .print-only-footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #999;
+  }
+
+  .print-only-footer p {
+    font-size: 0.8em;
+    color: #555;
+  }
+
+  /* Hide subtotal row in print, show only total final */
+  tfoot tr:first-child {
+    display: none;
+  }
+
+  .total-editable-row td {
+    padding: 8px 15px !important;
+    font-size: 1em !important;
+  }
+
+  #totalFinalInput,
+  #montoPagadoInput {
+    border: none !important;
+    background: transparent !important;
+    font-weight: 700 !important;
+    font-size: 1em !important;
+    padding: 0 !important;
+    width: auto !important;
+  }
+
+  /* Hide NO. column and Action column in print */
+  thead th:first-child,
+  tbody td:first-child,
+  thead th:last-child,
+  tbody td:last-child {
+    display: none;
+  }
+
+  header {
+    background: white !important;
+    color: black !important;
+    padding: 15px 20px;
+  }
+
+  header h1 {
+    color: black !important;
+    font-weight: 700 !important;
+    font-family: "Montserrat", "Segoe UI", sans-serif;
+  }
+
+  .patient-info {
+    background: white !important;
+    page-break-inside: avoid;
+  }
+
+  .input-group label {
+    font-weight: 700 !important;
+    color: black !important;
+    font-family: "Montserrat", "Segoe UI", sans-serif;
+  }
+
+  .input-group input {
+    font-weight: 600 !important;
+    font-family: "Montserrat", "Segoe UI", sans-serif;
+  }
+
+  .table-container {
+    border: none !important;
+  }
+
+  table {
+    border-collapse: collapse;
+    font-family: "Montserrat", "Segoe UI", sans-serif;
+  }
+
+  thead {
+    background: white !important;
+  }
+
+  thead th {
+    color: black !important;
+    font-weight: 700 !important;
+    font-family: "Montserrat", "Segoe UI", sans-serif;
+  }
+
+  tbody td {
+    color: black !important;
+    font-weight: 400 !important;
+  }
+
+  tbody td:nth-child(2) {
+    font-weight: 600 !important;
+  }
+
+  tfoot {
+    background: white !important;
+  }
+
+  tfoot td {
+    color: black !important;
+    font-weight: 700 !important;
+    font-size: 1em !important;
+    padding: 8px 15px !important;
+  }
+
+  #totalAmount {
+    font-weight: 700 !important;
+    font-size: 1em !important;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.5em;
+  }
+
+  .patient-info {
+    grid-template-columns: 1fr;
+  }
+
+  .analysis-panel {
+    padding: 15px;
+  }
+
+  .panel-list {
+    max-height: 250px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  table {
+    font-size: 0.9em;
+  }
+
+  thead th,
+  tbody td {
+    padding: 10px;
+  }
+}
+
+/* ===== Form Card (Catalog + Config) ===== */
+.form-card {
+  background: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 25px;
+  margin-bottom: 25px;
+}
+
+.form-card-title {
+  font-size: 1.15em;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.form-card-desc {
+  font-size: 0.9em;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.backup-actions {
+  flex-wrap: wrap;
+}
+
+.file-upload-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #666;
+  color: white;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  text-align: center;
+}
+
+.file-upload-btn:hover {
+  background: #555;
+}
+
+/* ===== Report Cards ===== */
+.report-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.report-card {
+  background: linear-gradient(135deg, #00000038, #00000080);
+  color: rgb(255, 255, 255);
+  border-radius: 3px;
+  padding: 25px;
+  text-align: center;
+}
+
+.report-card-label {
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  margin-bottom: 8px;
+}
+
+.report-card-value {
+  font-size: 1.8em;
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.report-card-count {
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+
+.catalogo-section,
+.config-section,
+.reportes-section {
+  padding: 20px 0;
+}
+
+.gastos-section {
+  padding: 20px 0;
+  border-top: 2px solid #e0e0e0;
+  margin-top: 10px;
+}
+
+.abonos-section {
+  padding: 20px 0;
+  border-top: 2px solid #e0e0e0;
+  margin-top: 10px;
+}
+
+/* Abono cards - blue theme */
+.abono-card {
+  background: linear-gradient(135deg, #2471a388, #2980b9cc) !important;
+}
+
+/* Section divider heading */
+.section-divider {
+  font-size: 1.4em;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 20px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #333;
+}
+
+/* Expense cards - red/orange theme */
+.gasto-card {
+  background: linear-gradient(135deg, #c0392b88, #e74c3ccc) !important;
+}
+
+/* Select styling */
+.gastos-section select {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  font-size: 1em;
+  font-weight: 500;
+  color: #000;
+  background: #fff;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.gastos-section select:focus {
+  outline: none;
+  border-color: #333;
+}
+
+/* Balance box */
+.balance-box {
+  background: #f8f9fa;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 20px 25px;
+  margin: 25px 0;
+}
+
+.balance-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 1em;
+  color: #333;
+}
+
+.balance-row.balance-total {
+  border-top: 2px solid #333;
+  margin-top: 8px;
+  padding-top: 12px;
+  font-size: 1.2em;
+  font-weight: 800;
+}
+
+/* Delete button for expenses */
+.btn-eliminar-gasto {
+  background: #f0e0e0;
+  color: #8b0000;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8em;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-eliminar-gasto:hover {
+  background: #e0c0c0;
+}
+
+/* ===== Print-only elements (hidden on screen) ===== */
+.print-only-info,
+.print-only-footer,
+#printFactura,
+#reciboAbonoPrint {
+  display: none;
+}
+
+/* ===== Delivery status in Registro ===== */
+.delivery-checkbox {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.delivery-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #333;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ===== Print utility classes ===== */
+@media print {
+  /* --- Hide everything on screen ONLY if we are printing a custom layout --- */
+  body.printing-factura > *:not(#printFactura):not(#reciboAbonoPrint) {
+    display: none !important;
+  }
+
+  /* --- Reveal and reset the print containers --- */
+  body.printing-factura #printFactura,
+  body.printing-factura #reciboAbonoPrint {
+    display: block !important;
+    position: relative;
+    width: 100%;
+    background: #fff;
+    color: #000;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Hide screen elements that have no-print / hide-on-print */
+  .no-print, .hide-on-print {
+    display: none !important;
+  }
+
+  /* --- Inner layout --- */
+  .pf-page {
+    width: 100%;
+    max-width: 100%;
+    padding: 12mm 14mm;
+    box-sizing: border-box;
+    page-break-after: avoid;
+  }
+
+  /* === HEADER: Lab name left, contact right === */
+  .pf-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #111;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  .pf-header-left h1 {
+    font-size: 16pt;
+    font-weight: bold;
+    margin: 0 0 2px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .pf-header-left p {
+    font-size: 8pt;
+    color: #555;
+    margin: 0;
+  }
+  .pf-header-right {
+    text-align: right;
+    font-size: 8.5pt;
+    color: #333;
+    line-height: 1.6;
+  }
+  .pf-header-right strong {
+    color: #000;
+  }
+
+  /* === META: Patient (left) + Invoice info (right) in 2 columns === */
+  .pf-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ccc;
+  }
+  .pf-meta-patient {
+    flex: 1;
+    font-size: 9pt;
+    line-height: 1.8;
+  }
+  .pf-meta-patient .pf-label {
+    font-size: 7.5pt;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .pf-meta-patient .pf-patient-name {
+    font-size: 12pt;
+    font-weight: bold;
+    color: #000;
+  }
+  .pf-meta-invoice {
+    text-align: right;
+    font-size: 9pt;
+    line-height: 1.8;
+    min-width: 150px;
+  }
+  .pf-meta-invoice table {
+    margin-left: auto;
+    border-collapse: collapse;
+  }
+  .pf-meta-invoice td:first-child {
+    color: #555;
+    padding-right: 10px;
+    font-size: 8.5pt;
+    text-align: right;
+  }
+  .pf-meta-invoice td:last-child {
+    font-weight: bold;
+    text-align: right;
+  }
+
+  /* === ITEMS TABLE === */
+  .pf-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    font-size: 9pt;
+  }
+  .pf-table thead tr {
+    border-bottom: 1.5px solid #000;
+  }
+  .pf-table thead th {
+    padding: 5px 6px;
+    text-align: left;
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #333;
+    font-weight: bold;
+  }
+  .pf-table thead th.right { text-align: right; }
+  .pf-table tbody tr {
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .pf-table tbody td {
+    padding: 5px 6px;
+    vertical-align: top;
+  }
+  .pf-table tbody td.right { text-align: right; }
+  .pf-table tbody td.num {
+    width: 24px;
+    color: #888;
+    font-size: 8pt;
+  }
+
+  /* === TOTALS === */
+  .pf-totals {
+    width: 100%;
+    margin-top: 4px;
+  }
+  .pf-totals-inner {
+    margin-left: auto;
+    width: 220px;
+    border-top: 1.5px solid #000;
+    padding-top: 6px;
+  }
+  .pf-totals-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    font-size: 9pt;
+    color: #333;
+  }
+  .pf-totals-row.total-final {
+    font-size: 11pt;
+    font-weight: bold;
+    color: #000;
+    border-top: 1px solid #ccc;
+    margin-top: 4px;
+    padding-top: 6px;
+  }
+  .pf-totals-row.pendiente {
+    font-size: 9.5pt;
+    font-weight: bold;
+    color: #c0392b;
+  }
+
+  /* === NOTES at bottom === */
+  .pf-notes {
+    margin-top: 14px;
+    border-top: 1px solid #ddd;
+    padding-top: 8px;
+    font-size: 8.5pt;
+    color: #555;
+  }
+  .pf-notes strong {
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #333;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  /* === FOOTER === */
+  .pf-footer {
+    margin-top: 18px;
+    border-top: 1px solid #ccc;
+    padding-top: 8px;
+    font-size: 7.5pt;
+    color: #888;
+    text-align: center;
+  }
+}
+
+/* Black & white print mode - activated by adding bw-print class to body */
+@media print {
+  body.bw-print #printFactura,
+  body.bw-print #printFactura *,
+  body.bw-print #reciboAbonoPrint,
+  body.bw-print #reciboAbonoPrint * {
+    color: black !important;
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+

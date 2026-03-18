@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reportes - Laboratorio Clínico</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+
+  <body>
+    <nav class="main-nav">
+      <a href="../index.html" class="nav-link">Nueva Factura</a>
+      <a href="registro.html" class="nav-link">Registro</a>
+      <a href="catalogo.html" class="nav-link">Catálogo</a>
+      <a href="reportes.html" class="nav-link active">Reportes</a>
+      <a href="configuracion.html" class="nav-link">Configuración</a>
+    </nav>
+
+    <div class="container">
+      <header>
+        <h1>LABORATORIO CLINICO LIC. MARIS POLANCO</h1>
+        <p class="subtitle">Reportes y Cuadre de Caja</p>
+      </header>
+
+      <main>
+        <!-- Inner Navigation -->
+        <nav class="inner-nav no-print" style="display:flex; gap:10px; margin-bottom:20px; background:#f8f9fa; padding:10px; border-radius:8px; overflow-x:auto;">
+          <a href="#sec-ingresos" style="color:#2c3e50; text-decoration:none; font-weight:bold; padding:5px 10px; background:#e9ecef; border-radius:4px;">📊 Ingresos</a>
+          <a href="#sec-abonos" style="color:#2980b9; text-decoration:none; font-weight:bold; padding:5px 10px; background:#ebf5fb; border-radius:4px;">💵 Abonos</a>
+          <a href="#sec-gastos" style="color:#e74c3c; text-decoration:none; font-weight:bold; padding:5px 10px; background:#fdedec; border-radius:4px;">💸 Gastos</a>
+        </nav>
+
+        <div class="reportes-section" id="sec-ingresos">
+          <!-- Summary cards -->
+          <div class="report-cards">
+            <div class="report-card">
+              <div class="report-card-label">Hoy</div>
+              <div class="report-card-value" id="totalHoy">RD$ 0</div>
+              <div class="report-card-count" id="facturasHoy">0 facturas</div>
+            </div>
+            <div class="report-card">
+              <div class="report-card-label">Esta Semana</div>
+              <div class="report-card-value" id="totalSemana">RD$ 0</div>
+              <div class="report-card-count" id="facturasSemana">
+                0 facturas
+              </div>
+            </div>
+            <div class="report-card">
+              <div class="report-card-label">Este Mes</div>
+              <div class="report-card-value" id="totalMes">RD$ 0</div>
+              <div class="report-card-count" id="facturasMes">0 facturas</div>
+            </div>
+          </div>
+
+          <!-- Pending summary box -->
+          <div
+            class="pendiente-box"
+            style="
+              background: #fff3cd;
+              border-left: 5px solid #ffc107;
+              padding: 15px;
+              margin-bottom: 20px;
+              border-radius: 5px;
+              box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <div>
+              <h3 style="margin: 0; color: #856404; font-size: 1.1rem">
+                Total Pendiente (Global)
+              </h3>
+              <p
+                style="margin: 5px 0 0 0; color: #664d03; font-size: 0.9rem"
+                id="facturasPendientes"
+              >
+                0 facturas con saldo pendiente
+              </p>
+            </div>
+            <div style="text-align: right">
+              <span
+                style="font-size: 1.5rem; font-weight: bold; color: #856404"
+                id="totalPendienteGlobal"
+                >RD$ 0</span
+              >
+            </div>
+          </div>
+
+          <!-- Date range filter -->
+          <div class="form-card no-print">
+            <h3 class="form-card-title">📅 Filtrar por Rango de Fechas</h3>
+            <div class="form-row">
+              <div class="input-group" style="flex: 1">
+                <label for="fechaDesde">Desde:</label>
+                <input type="date" id="fechaDesde" />
+              </div>
+              <div class="input-group" style="flex: 1">
+                <label for="fechaHasta">Hasta:</label>
+                <input type="date" id="fechaHasta" />
+              </div>
+              <div
+                class="input-group"
+                style="flex: 1; justify-content: flex-end; padding-bottom: 10px"
+              >
+                <label
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    cursor: pointer;
+                    color: #856404;
+                    font-weight: bold;
+                  "
+                >
+                  <input
+                    type="checkbox"
+                    id="soloPendientes"
+                    style="width: 18px; height: 18px; accent-color: #856404"
+                  />
+                  Mostrar solo pendientes
+                </label>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button id="filtrarBtn" class="btn-primary">Filtrar</button>
+              <button id="limpiarFiltroBtn" class="btn-secondary">
+                Limpiar
+              </button>
+              <button id="imprimirReporteBtn" class="btn-secondary">
+                🖨️ Imprimir Reporte
+              </button>
+              <button id="imprimirBNBtn" class="btn-secondary">
+                Imprimir B/N
+              </button>
+            </div>
+          </div>
+
+          <!-- Filtered results -->
+          <div class="registro-stats">
+            <span id="reporteStats"></span>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>NO.</th>
+                  <th
+                    class="sortable"
+                    onclick="sortReporte('numero')"
+                    id="rth-numero"
+                  >
+                    FACTURA ▼
+                  </th>
+                  <th
+                    class="sortable"
+                    onclick="sortReporte('fecha')"
+                    id="rth-fecha"
+                  >
+                    FECHA
+                  </th>
+                  <th
+                    class="sortable"
+                    onclick="sortReporte('paciente')"
+                    id="rth-paciente"
+                  >
+                    PACIENTE
+                  </th>
+                  <th
+                    class="sortable"
+                    onclick="sortReporte('total')"
+                    id="rth-total"
+                  >
+                    TOTAL
+                  </th>
+                  <th id="rth-encaja">EN CAJA</th>
+                  <th
+                    class="sortable"
+                    onclick="sortReporte('pendiente')"
+                    id="rth-pendiente"
+                  >
+                    PENDIENTE
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="reporteTableBody"></tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4"><strong>TOTAL DEL PERÍODO</strong></td>
+                  <td><strong id="totalPeriodo">RD$ 0</strong></td>
+                  <td><strong id="totalEnCajaPeriodo">RD$ 0</strong></td>
+                  <td><strong id="totalPendientePeriodo">RD$ 0</strong></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== SECCIÓN DE ABONOS ===== -->
+        <div class="abonos-section" id="sec-abonos">
+          <h2 class="section-divider">💵 Abonos Recibidos</h2>
+
+          <!-- Abonos summary cards -->
+          <div class="report-cards">
+            <div class="report-card abono-card">
+              <div class="report-card-label">Abonos Hoy</div>
+              <div class="report-card-value" id="abonosHoyTotal">RD$ 0</div>
+              <div class="report-card-count" id="abonosHoyCount">0 abonos</div>
+            </div>
+            <div class="report-card abono-card">
+              <div class="report-card-label">Esta Semana</div>
+              <div class="report-card-value" id="abonosSemanaTotal">RD$ 0</div>
+              <div class="report-card-count" id="abonosSemanaCount">
+                0 abonos
+              </div>
+            </div>
+            <div class="report-card abono-card">
+              <div class="report-card-label">Este Mes</div>
+              <div class="report-card-value" id="abonosMesTotal">RD$ 0</div>
+              <div class="report-card-count" id="abonosMesCount">0 abonos</div>
+            </div>
+          </div>
+
+          <!-- Abonos table stats -->
+          <div class="registro-stats">
+            <span id="abonosStats"></span>
+          </div>
+
+          <!-- Abonos table -->
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>NO.</th>
+                  <th>FECHA ABONO</th>
+                  <th>FACTURA</th>
+                  <th>PACIENTE</th>
+                  <th>MONTO</th>
+                  <th>NOTA</th>
+                  <th class="no-print">ACCIONES</th>
+                </tr>
+              </thead>
+              <tbody id="abonosTableBody"></tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4"><strong>TOTAL ABONOS DEL PERÍODO</strong></td>
+                  <td><strong id="totalAbonosPeriodo">RD$ 0</strong></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== SECCIÓN DE GASTOS ===== -->
+        <div class="gastos-section" id="sec-gastos">
+          <h2 class="section-divider">💸 Control de Gastos</h2>
+
+          <!-- Expense summary cards -->
+          <div class="report-cards">
+            <div class="report-card gasto-card">
+              <div class="report-card-label">Gastos Hoy</div>
+              <div class="report-card-value" id="gastosHoy">RD$ 0</div>
+              <div class="report-card-count" id="gastosHoyCount">0 gastos</div>
+            </div>
+            <div class="report-card gasto-card">
+              <div class="report-card-label">Esta Semana</div>
+              <div class="report-card-value" id="gastosSemana">RD$ 0</div>
+              <div class="report-card-count" id="gastosSemanaCount">
+                0 gastos
+              </div>
+            </div>
+            <div class="report-card gasto-card">
+              <div class="report-card-label">Este Mes</div>
+              <div class="report-card-value" id="gastosMes">RD$ 0</div>
+              <div class="report-card-count" id="gastosMesCount">0 gastos</div>
+            </div>
+          </div>
+
+          <!-- New expense form -->
+          <div class="form-card no-print">
+            <h3 class="form-card-title">➕ Registrar Nuevo Gasto</h3>
+            <div class="form-row">
+              <div class="input-group" style="flex: 1">
+                <label for="gastoFecha">Fecha:</label>
+                <input type="date" id="gastoFecha" />
+              </div>
+              <div class="input-group" style="flex: 2">
+                <label for="gastoDescripcion">Descripción:</label>
+                <input
+                  type="text"
+                  id="gastoDescripcion"
+                  placeholder="Ej: Compra de reactivos"
+                />
+              </div>
+              <div class="input-group" style="flex: 1">
+                <label for="gastoCategoria">Categoría:</label>
+                <select id="gastoCategoria">
+                  <option value="Materiales">Materiales</option>
+                  <option value="Servicios">Servicios</option>
+                  <option value="Personal">Personal</option>
+                  <option value="Transporte">Transporte</option>
+                  <option value="Alquiler">Alquiler</option>
+                  <option value="Mantenimiento">Mantenimiento</option>
+                  <option value="Otros">Otros</option>
+                </select>
+              </div>
+              <div class="input-group" style="flex: 1">
+                <label for="gastoMonto">Monto (RD$):</label>
+                <input
+                  type="number"
+                  id="gastoMonto"
+                  placeholder="0"
+                  min="0"
+                  step="1"
+                />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button id="registrarGastoBtn" class="btn-primary">
+                Registrar Gasto
+              </button>
+            </div>
+          </div>
+
+          <!-- Expense date filter -->
+          <div class="form-card no-print">
+            <h3 class="form-card-title">📅 Filtrar Gastos</h3>
+            <div class="form-row">
+              <div class="input-group" style="flex: 2">
+                <label for="gastoSearch">Buscar por Descripción/Categoría:</label>
+                <input
+                  type="text"
+                  id="gastoSearch"
+                  placeholder="🔍 Ej: reactivos, alquiler..."
+                  autocomplete="off"
+                />
+              </div>
+              <div class="input-group" style="flex: 1">
+                <label for="gastoFechaDesde">Desde:</label>
+                <input type="date" id="gastoFechaDesde" />
+              </div>
+              <div class="input-group" style="flex: 1">
+                <label for="gastoFechaHasta">Hasta:</label>
+                <input type="date" id="gastoFechaHasta" />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button id="filtrarGastosBtn" class="btn-primary">Filtrar</button>
+              <button id="limpiarFiltroGastosBtn" class="btn-secondary">
+                Limpiar
+              </button>
+            </div>
+          </div>
+
+          <!-- Expense table stats -->
+          <div class="registro-stats">
+            <span id="gastosStats"></span>
+          </div>
+
+          <!-- Expense table -->
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>NO.</th>
+                  <th>FECHA</th>
+                  <th>DESCRIPCIÓN</th>
+                  <th>CATEGORÍA</th>
+                  <th>MONTO</th>
+                  <th class="no-print">ACCIÓN</th>
+                </tr>
+              </thead>
+              <tbody id="gastosTableBody"></tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4"><strong>TOTAL GASTOS DEL PERÍODO</strong></td>
+                  <td><strong id="totalGastosPeriodo">RD$ 0</strong></td>
+                  <td class="no-print"></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <!-- SECCIÓN DE DEPÓSITOS ELIMINADA POR SOLICITUD -->
+        <!-- ===== BALANCE NETO ===== -->
+        <div class="balance-box" id="balanceBox">
+          <div class="balance-row">
+            <span>💰 Ingresos del Período (En Caja)</span>
+            <span id="balanceIngresos" style="color: #27ae60; font-weight: bold"
+              >RD$ 0</span
+            >
+          </div>
+          <div class="balance-row">
+            <span>💵 Abonos Recibidos en el Período</span>
+            <span id="balanceAbonos" style="color: #2980b9; font-weight: bold"
+              >RD$ 0</span
+            >
+          </div>
+          <div class="balance-row">
+            <span>💸 Gastos del Período</span>
+            <span id="balanceGastos" style="color: #e74c3c; font-weight: bold"
+              >RD$ 0</span
+            >
+          </div>
+          <div class="balance-row balance-total">
+            <span>📊 Balance Neto Físico (En Caja Fuerte)</span>
+            <span id="balanceNeto">RD$ 0</span>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/reportes.js"></script>
+
+    <!-- Edit Modal (abonos & gastos) -->
+    <div id="editModalOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;justify-content:center;align-items:center;">
+      <div style="background:#fff;border-radius:8px;width:90%;max-width:480px;padding:30px;box-shadow:0 8px 30px rgba(0,0,0,0.3);">
+        <h3 id="editModalTitle" style="margin:0 0 20px 0;font-size:1.1rem;color:#333;">Editar</h3>
+        <div id="editModalFields"></div>
+        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px;">
+          <button class="btn-secondary" onclick="cerrarEditModal()">Cancelar</button>
+          <button class="btn-primary" id="editModalSaveBtn">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
