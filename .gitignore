@@ -1,0 +1,6 @@
+# Ignorar todo
+*
+
+# Excepciones (archivos que sí queremos mostrar/incluir)
+!.gitignore
+!index.html
